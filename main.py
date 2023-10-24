@@ -3,13 +3,24 @@ import pyglet
 import random
 from pyglet import shapes
 
+
+music = pyglet.media.load('music.wav', streaming=False)
+music.play()
+
+
 # Lista de palabras para adivinar
-palabras = ["python", "programacion", "computadora", "tecnologia", "inteligencia"]
+categorias_de_palabras = {
+    "super smash bros": ["mario", "link", "kirby", "donkey kong", "samus", "pikmin", "fox", "peach"],
+    "pokemon": ["pikachu", "charizard", "bulbasaur", "squirtle", "eevee", "pidgey", "meowth", "jigglypuff"],
+    "yugioh": ["exodia"]
+}
+
 
 # Función para reiniciar el juego
 def reiniciar_juego():
-    global palabra, intentos, letras_adivinadas, perdiste, letras_pulsadas
-    palabra = random.choice(palabras)
+    global palabra, intentos, letras_adivinadas, perdiste, letras_pulsadas, categoria_elegida
+    categoria_elegida = random.choice(list(categorias_de_palabras.keys()))
+    palabra = random.choice(categorias_de_palabras[categoria_elegida])
     intentos = 6
     letras_adivinadas = []
     letras_pulsadas = []  # Inicializa letras_pulsadas
@@ -20,7 +31,10 @@ def juego_terminado():
     return set(letras_adivinadas) == set(palabra) or intentos == 0
 
 # Elegir una palabra al azar
-palabra = random.choice(palabras)
+categoria_elegida = random.choice(list(categorias_de_palabras.keys()))
+
+# Elige una palabra al azar de la categoría seleccionada
+palabra = random.choice(categorias_de_palabras[categoria_elegida])
 
 # Inicializar las variables
 intentos = 6  # Número de intentos permitidos
@@ -74,14 +88,14 @@ humano5 = shapes.Line(175, 235, 220, 190, width=10, batch=batch5, color=(139, 69
 humano6 = shapes.Line(130, 190, 175, 235, width=10, batch=batch6, color=(139, 69, 19))  # Cambia el color a café (RGB: 139, 69, 19)
 # Función para dibujar el estado actual del juego
 @ventana.event
-def on_draw():
+def on_draw():    
     ventana.clear()
     estado_actual = ""
     for letra in palabra:
         if letra in letras_adivinadas:
             estado_actual += letra
         else:
-            estado_actual += "_"
+            estado_actual += " _ "
 
     if set(letras_adivinadas) == set(palabra):
         mensaje = "¡Felicidades!\nHas adivinado la palabra:\n" + palabra
@@ -109,7 +123,14 @@ def on_draw():
     if juego_terminado():
         boton_reiniciar.draw()
     elif not juego_terminado():
-        # Dibuja las letras pulsadas
+        categoria = "Categoria: " + categoria_elegida
+        categoria_label = pyglet.text.Label(categoria,
+                                                   font_name='Arial',
+                                                   font_size=24,
+                                                   x=ventana.width // 2,
+                                                   y=y_position + 200,
+                                                   anchor_x='center', anchor_y='center')
+        categoria_label.draw()
         letras_pulsadas_str = "Letras pulsadas: " + ", ".join(letras_pulsadas)
         letras_pulsadas_label = pyglet.text.Label(letras_pulsadas_str,
                                                    font_name='Arial',
