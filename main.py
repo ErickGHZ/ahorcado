@@ -2,14 +2,49 @@ from PIL import Image
 import pyglet
 import random
 from pyglet import shapes
+import json
+import tkinter as tk
+from tkinter import filedialog
 
-# Lista de palabras para adivinar
-palabras = ["python", "programacion", "computadora", "tecnologia", "inteligencia"]
+# Ventana de selección de archivo
+root = tk.Tk()
+root.withdraw()  # Oculta la ventana principal
+
+# Abre un cuadro de diálogo para seleccionar un archivo
+file_path = filedialog.askopenfilename(filetypes=[("Archivos JSON", "*.json")])
+
+if file_path:
+    # Cargar el archivo JSON seleccionado
+    with open(file_path, 'r') as archivo:
+        data = json.load(archivo)
+    
+    # Acceder a los datos del archivo JSON
+    print(data)
+else:
+    print("No se seleccionó ningún archivo")
+
+
+music = pyglet.media.load('music.wav', streaming=False)
+music.play()
+
+
+# Cargar los datos desde el archivo JSON
+with open("categorias_de_palabras.json", "r") as archivo:
+    categorias_de_palabras = json.load(archivo)
+
+
+
 
 # Función para reiniciar el juego
 def reiniciar_juego():
-    global palabra, intentos, letras_adivinadas, perdiste, letras_pulsadas
-    palabra = random.choice(palabras)
+    global palabra, palabra_label, intentos, letras_adivinadas, perdiste, letras_pulsadas, categoria_elegida, pista
+    categoria_elegida = random.choice(list(data.keys()))
+
+    # Elegir un elemento al azar de la categoría seleccionada
+    elemento_elegido = random.choice(data[categoria_elegida])
+    palabra = elemento_elegido["nombre"].lower()
+    palabra_label = elemento_elegido["nombre"]
+    pista = elemento_elegido["pista"]
     intentos = 6
     letras_adivinadas = []
     letras_pulsadas = []  # Inicializa letras_pulsadas
@@ -19,10 +54,18 @@ def reiniciar_juego():
 def juego_terminado():
     return set(letras_adivinadas) == set(palabra) or intentos == 0
 
-# Elegir una palabra al azar
-palabra = random.choice(palabras)
 
-# Inicializar las variables
+# Elegir una categoría al azar del archivo JSON
+categoria_elegida = random.choice(list(data.keys()))
+
+# Elegir un elemento al azar de la categoría seleccionada
+elemento_elegido = random.choice(data[categoria_elegida])
+
+# Obtener los atributos del elemento seleccionado (por ejemplo, nombre y pista)
+palabra = elemento_elegido["nombre"].lower()
+palabra_label = elemento_elegido["nombre"]
+pista = elemento_elegido["pista"]
+
 intentos = 6  # Número de intentos permitidos
 letras_adivinadas = []  # Letras adivinadas
 letras_pulsadas = []  # Letras pulsadas
@@ -74,19 +117,19 @@ humano5 = shapes.Line(175, 235, 220, 190, width=10, batch=batch5, color=(139, 69
 humano6 = shapes.Line(130, 190, 175, 235, width=10, batch=batch6, color=(139, 69, 19))  # Cambia el color a café (RGB: 139, 69, 19)
 # Función para dibujar el estado actual del juego
 @ventana.event
-def on_draw():
+def on_draw():    
     ventana.clear()
     estado_actual = ""
     for letra in palabra:
         if letra in letras_adivinadas:
             estado_actual += letra
         else:
-            estado_actual += "_"
+            estado_actual += " _ "
 
     if set(letras_adivinadas) == set(palabra):
-        mensaje = "¡Felicidades!\nHas adivinado la palabra:\n" + palabra
+        mensaje = "¡Felicidades!\nHas adivinado la palabra:\n" + palabra_label
     elif intentos == 0:
-        mensaje = "¡Perdiste!\nLa palabra era:\n" + palabra
+        mensaje = "¡Perdiste!\nLa palabra era:\n" + palabra_label
     else:
         mensaje = estado_actual
 
@@ -109,7 +152,14 @@ def on_draw():
     if juego_terminado():
         boton_reiniciar.draw()
     elif not juego_terminado():
-        # Dibuja las letras pulsadas
+        categoria = "Categoría: " + categoria_elegida + ", Pista: " + pista
+        categoria_label = pyglet.text.Label(categoria,
+                                                   font_name='Arial',
+                                                   font_size=24,
+                                                   x=ventana.width // 2,
+                                                   y=y_position + 200,
+                                                   anchor_x='center', anchor_y='center')
+        categoria_label.draw()
         letras_pulsadas_str = "Letras pulsadas: " + ", ".join(letras_pulsadas)
         letras_pulsadas_label = pyglet.text.Label(letras_pulsadas_str,
                                                    font_name='Arial',
@@ -170,7 +220,7 @@ def on_key_press(symbol, modifiers):
     if juego_terminado():
         return
 
-    letra = chr(symbol).lower()
+    letra = chr(symbol)
 
     if letra not in letras_pulsadas:
         letras_pulsadas.append(letra)
