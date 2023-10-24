@@ -2,18 +2,20 @@ from PIL import Image
 import pyglet
 import random
 from pyglet import shapes
+import json
 
 
 music = pyglet.media.load('music.wav', streaming=False)
 music.play()
 
 
-# Lista de palabras para adivinar
-categorias_de_palabras = {
-    "super smash bros": ["mario", "link", "kirby", "donkey kong", "samus", "pikmin", "fox", "peach"],
-    "pokemon": ["pikachu", "charizard", "bulbasaur", "squirtle", "eevee", "pidgey", "meowth", "jigglypuff"],
-    "yugioh": ["exodia"]
-}
+# Cargar los datos desde el archivo JSON
+with open("categorias_de_palabras.json", "r") as archivo:
+    categorias_de_palabras = json.load(archivo)
+
+# Ahora, categorias_de_palabras contiene los datos del archivo
+print(categorias_de_palabras)
+
 
 
 # Función para reiniciar el juego
