@@ -1,5 +1,4 @@
 {
-    "super smash bros": ["mario", "link", "kirby", "donkey kong", "samus", "pikmin", "fox", "peach"],
-    "pokemon": ["pikachu", "charizard", "bulbasaur", "squirtle", "eevee", "pidgey", "meowth", "jigglypuff"],
-    "yugioh": ["exodia"]
+    "pokemon": [{"nombre": "Pikachu","pista": "Eléctrico"},{"nombre": "Charizard","pista": "Fuego/Volador"},{"nombre": "Bulbasaur","pista": "Planta/Veneno"},{"nombre": "Squirtle","pista": "Agua"},{"nombre": "Eevee","pista": "Normal"},{"nombre": "Pidgey","pista": "Normal/Volador"},{"nombre": "Meowth","pista": "Normal"},{"nombre": "Jigglypuff","pista": "Normal/Hada"}],
+    "pokemones": [{"nombre": "Pikachu","pista": "Eléctrico"},{"nombre": "Charizard","pista": "Fuego/Volador"},{"nombre": "Bulbasaur","pista": "Planta/Veneno"},{"nombre": "Squirtle","pista": "Agua"},{"nombre": "Eevee","pista": "Normal"},{"nombre": "Pidgey","pista": "Normal/Volador"},{"nombre": "Meowth","pista": "Normal"},{"nombre": "Jigglypuff","pista": "Normal/Hada"}]
 }
