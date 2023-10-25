@@ -1,4 +1,22 @@
 {
-    "pokemon": [{"nombre": "Pikachu","pista": "Eléctrico"},{"nombre": "Charizard","pista": "Fuego/Volador"},{"nombre": "Bulbasaur","pista": "Planta/Veneno"},{"nombre": "Squirtle","pista": "Agua"},{"nombre": "Eevee","pista": "Normal"},{"nombre": "Pidgey","pista": "Normal/Volador"},{"nombre": "Meowth","pista": "Normal"},{"nombre": "Jigglypuff","pista": "Normal/Hada"}],
-    "pokemones": [{"nombre": "Pikachu","pista": "Eléctrico"},{"nombre": "Charizard","pista": "Fuego/Volador"},{"nombre": "Bulbasaur","pista": "Planta/Veneno"},{"nombre": "Squirtle","pista": "Agua"},{"nombre": "Eevee","pista": "Normal"},{"nombre": "Pidgey","pista": "Normal/Volador"},{"nombre": "Meowth","pista": "Normal"},{"nombre": "Jigglypuff","pista": "Normal/Hada"}]
+    "Pokemon": [
+        {"nombre": "Pikachu", "pista": "Eléctrico"},
+        {"nombre": "Charizard", "pista": "Fuego"},
+        {"nombre": "Bulbasaur", "pista": "Planta"},
+        {"nombre": "Mewtwo", "pista": "Psíquico"},
+        {"nombre": "Gyarados", "pista": "Agua"},
+        {"nombre": "Snorlax", "pista": "Dormilón"},
+        {"nombre": "Jigglypuff", "pista": "Cantante"},
+        {"nombre": "Gengar", "pista": "Fantasma"}
+    ],
+    "Fútbol Mexicano": [
+        {"nombre": "Chivas", "pista": "Guadalajara"},
+        {"nombre": "Club América", "pista": "Exitoso"},
+        {"nombre": "Tigres UANL", "pista": "Defensa"},
+        {"nombre": "Cruz Azul", "pista": "Cruzazulear"},
+        {"nombre": "Pumas UNAM", "pista": "Estudiantil"},
+        {"nombre": "Santos Laguna", "pista": "Campeonatos"},
+        {"nombre": "León", "pista": "PanzasVerdes"},
+        {"nombre": "Monarcas Morelia", "pista": "Mazatlán"}
+    ]
 }
